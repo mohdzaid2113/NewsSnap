@@ -20,7 +20,19 @@ def get_news():
     try:
         response = requests.get(url)
         data = response.json()
-        return jsonify(data)
+
+        # Filter out articles that are marked as "[Removed]" in title, description, or content
+        filtered_articles = [
+            article for article in data.get('articles', [])
+            if article.get('title') and article.get('url') and article.get('content')
+            and "[Removed]" not in article.get('title', '')
+            and "[Removed]" not in article.get('description', '')
+            and "[Removed]" not in article.get('content', '')
+        ]
+
+        # Return only the filtered articles to the frontend
+        return jsonify({'articles': filtered_articles})
+
     except Exception as e:
         return jsonify({'error': str(e)})
 
