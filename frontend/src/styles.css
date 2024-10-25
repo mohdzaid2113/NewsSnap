@@ -1,0 +1,116 @@
+/* General Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* App Header */
+.app-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0073b1; /* LinkedIn Blue */
+    padding: 20px;
+}
+
+.app-logo {
+    width: 80px;   /* Logo width */
+    height: auto;  /* Maintains aspect ratio */
+    margin-right: 15px; /* Space between the logo and the title */
+}
+
+.app-header h1 {
+    color: #fff;     /* White text for header */
+    font-size: 2em;  /* Large font size for title */
+}
+
+/* News List Styling */
+.news-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* NewsCard Styling */
+.news-card {
+    background-color: #ffffff; /* White background for cards */
+    border-radius: 10px;       /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    padding: 15px;
+    transition: transform 0.2s ease-in-out; /* Smooth scale effect */
+    cursor: pointer;           /* Pointer cursor */
+    display: flex;
+    flex-direction: column;    /* Vertical layout */
+    text-align: left;          /* Left-aligned text */
+}
+
+.news-card:hover {
+    transform: scale(1.02);   /* Scale effect on hover */
+}
+
+/* Image Styling */
+.news-image {
+    width: 100%;              /* Full width */
+    height: auto;             /* Auto height for images */
+    border-radius: 10px;      /* Rounded corners for images */
+}
+
+/* Card Heading */
+.news-card h2 {
+    font-size: 1.25em;        /* Heading font size */
+    margin: 10px 0;          /* Margin for spacing */
+    color: #0073b1;          /* LinkedIn blue */
+}
+
+/* Description and Read More */
+.news-card p {
+    font-size: 1em;           /* Description font size */
+    color: #666;              /* Darker gray for description */
+    margin-bottom: 10px;      /* Margin for spacing */
+}
+
+.news-card a {
+    color: #ff4500;           /* Accent color for links */
+    text-decoration: none;     /* No underline */
+    font-weight: bold;         /* Bold links */
+    transition: color 0.2s;    /* Smooth color transition */
+}
+
+.news-card a:hover {
+    color: #0073b1;           /* Change color on hover */
+}
+
+/* Search Bar Styling */
+.search-bar {
+    margin: 20px auto;        /* Center the search bar */
+    max-width: 600px;         /* Maximum width */
+    display: flex;
+    justify-content: center;   /* Center the elements */
+}
+
+.search-bar input {
+    flex: 1;                  /* Take full available width */
+    padding: 10px;            /* Padding for input */
+    border-radius: 5px;       /* Rounded corners for input */
+    border: 2px solid #0073b1; /* Border color */
+    font-size: 1em;           /* Input font size */
+}
+
+.search-bar button {
+    padding: 10px 20px;       /* Button padding */
+    background-color: #0073b1; /* Button background color */
+    color: #fff;              /* Button text color */
+    border: none;             /* No border */
+    border-radius: 5px;       /* Rounded corners */
+    cursor: pointer;          /* Pointer cursor */
+    margin-left: 10px;        /* Space between input and button */
+    transition: background-color 0.2s; /* Smooth background color transition */
+}
+
+.search-bar button:hover {
+    background-color: #005580; /* Darker button on hover */
+}
