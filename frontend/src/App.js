@@ -1,40 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import NewsCard from './components/NewsCard';
-import SearchBar from './components/SearchBar';
+import axios from 'axios';
 
-const App = () => {
+function App() {
+  // Step 1: Set a default value of an empty array for `news`
   const [news, setNews] = useState([]);
-  const [query, setQuery] = useState('latest');
 
-  const fetchNews = async () => {
-    try {
-      const response = await fetch(`http://127.0.0.1:5000/news?q=${query}`);
-      const data = await response.json();
-      setNews(data.articles);
-    } catch (error) {
-      console.error('Error fetching news:', error);
-    }
-  };
-
+  // Step 2: Fetch news data from your backend API
   useEffect(() => {
-    fetchNews();
-  }, [query]);
+    axios.get('/api/news')  // Make sure this endpoint is correct
+      .then(response => {
+        // Step 3: Ensure the response has a valid articles array or default to an empty array
+        setNews(response.data.articles || []);
+      })
+      .catch(error => {
+        console.error('Error fetching news:', error);
+      });
+  }, []);
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <img src="/logo.png" alt="NewsSnap Logo" className="app-logo" />
-        <h1>NewsSnap</h1>
-      </header>
-      <SearchBar onSearch={setQuery} />
-      <div className="news-list">
-        {news.map((article, index) => (
-          <NewsCard key={index} article={article} />
-        ))}
-      </div>
+    <div>
+      <h1>News Feed</h1>
+      
+      {/* Step 4: Conditionally render the news articles or show a loading message */}
+      {news && news.length > 0 ? (
+        news.map((article, index) => (
+          <div key={index} className="news-card">
+            <h2>{article.title}</h2>
+            <p>{article.description}</p>
+          </div>
+        ))
+      ) : (
+        <p>Loading news...</p>  // Displayed when `news` is empty or still loading
+      )}
     </div>
   );
-};
+}
 
 export default App;
