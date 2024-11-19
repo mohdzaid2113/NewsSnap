@@ -1,39 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import './App.css';
+import NewsCard from './components/NewsCard';
+import SearchBar from './components/SearchBar';
 
-function App() {
-  // Step 1: Set a default value of an empty array for `news`
+const App = () => {
   const [news, setNews] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [query, setQuery] = useState('latest');
 
-  // Step 2: Fetch news data from your backend API
+  const fetchNews = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/news?q=${encodeURIComponent(query)}`);
+      const data = await response.json();
+      
+      // Always use the articles array from the response, even if it's empty
+      setNews(data.articles || []);
+      
+      // Set error if one was returned
+      if (data.error) {
+        setError(data.error);
+      }
+      
+    } catch (error) {
+      console.error('Error fetching news:', error);
+      setError('Failed to fetch news. Please try again later.');
+      setNews([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    axios.get('/api/news')  // Make sure this endpoint is correct
-      .then(response => {
-        // Step 3: Ensure the response has a valid articles array or default to an empty array
-        setNews(response.data.articles || []);
-      })
-      .catch(error => {
-        console.error('Error fetching news:', error);
-      });
-  }, []);
+    fetchNews();
+  }, [query]);
 
   return (
-    <div>
-      <h1>News Feed</h1>
+    <div className="app">
+      <header className="app-header">
+        <img src="/logo.png" alt="NewsSnap Logo" className="app-logo" />
+        <h1>NewsSnap</h1>
+      </header>
       
-      {/* Step 4: Conditionally render the news articles or show a loading message */}
-      {news && news.length > 0 ? (
-        news.map((article, index) => (
-          <div key={index} className="news-card">
-            <h2>{article.title}</h2>
-            <p>{article.description}</p>
-          </div>
-        ))
-      ) : (
-        <p>Loading news...</p>  // Displayed when `news` is empty or still loading
+      <SearchBar onSearch={setQuery} />
+      
+      {loading && (
+        <div className="loading-message">
+          <p>Loading news...</p>
+        </div>
       )}
+      
+      {error && (
+        <div className="error-message">
+          <p>{error}</p>
+        </div>
+      )}
+      
+      <div className="news-list">
+        {!loading && !error && news.length > 0 ? (
+          news.map((article, index) => (
+            <NewsCard key={`${article.url}-${index}`} article={article} />
+          ))
+        ) : !loading && !error ? (
+          <div className="no-results">
+            <p>No news articles found. Please try a different search term.</p>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
-}
+};
 
 export default App;

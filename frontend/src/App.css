@@ -6,83 +6,198 @@ body {
   padding: 0;
 }
 
+/* Header Styles */
 .app-header {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #0073b1;
   padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .app-logo {
   width: 80px;
   height: auto;
   margin-right: 15px;
+  transition: transform 0.3s ease;
+}
+
+.app-logo:hover {
+  transform: scale(1.05);
 }
 
 .app-header h1 {
   color: #fff;
   font-size: 2em;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+/* Search Bar Styles */
+.search-bar {
+  margin: 20px auto;
+  max-width: 600px;
+  display: flex;
+  padding: 0 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 5px;
+  border: 2px solid #0073b1;
+  font-size: 1em;
+  transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+  outline: none;
+  border-color: #005582;
+  box-shadow: 0 0 0 3px rgba(0, 115, 177, 0.2);
+}
+
+.search-bar button {
+  padding: 10px 25px;
+  background-color: #0073b1;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.search-bar button:hover {
+  background-color: #005582;
+}
+
+/* News List Grid */
 .news-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 20px;
   padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
+/* News Card Styles */
 .news-card {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   padding: 15px;
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.3s ease;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .news-image {
   width: 100%;
-  height: auto;
+  height: 200px;
   border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 15px;
 }
 
 .news-card h2 {
   font-size: 1.25em;
   margin: 10px 0;
   color: #0073b1;
+  line-height: 1.4;
 }
 
 .news-card p {
   font-size: 1em;
   color: #666;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  line-height: 1.6;
+  flex-grow: 1;
 }
 
 .news-card a {
   color: #ff4500;
   text-decoration: none;
   font-weight: bold;
+  transition: color 0.3s ease;
+  display: inline-block;
+  margin-top: auto;
 }
 
-.search-bar {
+.news-card a:hover {
+  color: #cc3700;
+  text-decoration: underline;
+}
+
+/* Loading, Error, and No Results States */
+.loading-message,
+.error-message,
+.no-results {
+  text-align: center;
+  padding: 30px;
   margin: 20px auto;
   max-width: 600px;
-  display: flex;
+  border-radius: 10px;
+  font-size: 1.1em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.search-bar input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 2px solid #0073b1;
+.loading-message {
+  background: #f0f9ff;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
 }
 
-.search-bar button {
-  padding: 10px 20px;
-  background-color: #0073b1;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  margin-left: 10px;
+.error-message {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.no-results {
+  background: #f8f8f8;
+  color: #666;
+  border: 1px solid #e5e5e5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .news-list {
+    grid-template-columns: 1fr;
+    padding: 15px;
+  }
+
+  .app-header {
+    padding: 15px;
+  }
+
+  .app-logo {
+    width: 60px;
+  }
+
+  .app-header h1 {
+    font-size: 1.5em;
+  }
+
+  .search-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-bar button {
+    margin-left: 0;
+  }
+
+  .news-image {
+    height: 180px;
+  }
 }
